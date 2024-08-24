@@ -16,8 +16,8 @@ learning_rate=1e-3
 
 batch_size=12
 
-train_data=datasets.MNIST('C:\\Users\\82104\\Downloads',train=True, download=True, transform=transforms.ToTensor())
-test_data=datasets.MNIST('C:\\Users\\82104\\Downloads',train=True, download=True, transform=transforms.ToTensor())
+train_data=datasets.MNIST(file_path,train=True, download=True, transform=transforms.ToTensor())
+test_data=datasets.MNIST(file_path,train=True, download=True, transform=transforms.ToTensor())
 
 train_loader=torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
 test_loader=torch.utils.data.DataLoader(test_data,batch_size=batch_size)
