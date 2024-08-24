@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import argparse
 import os
 import matplotlib.pyplot as plt
@@ -20,11 +17,6 @@ from torch.utils.data import Dataset, DataLoader
 import tqdm
 import tensorflow as tf
 from module import CNN
-
-
-# In[2]:
-
-
 import numpy as np
 from sklearn.model_selection import KFold
 import torch.nn.functional as F
@@ -37,29 +29,19 @@ import keras
 from keras.datasets import mnist
 
 
-# In[3]:
-
-
 device='cuda' if torch.cuda.is_available() else 'cpu'
 
 torch.manual_seed(777)
 if device== 'cuda':
     torch.cuda.manual_seed_all(777)
 
-
-# In[4]:
-
-
 batch_size=12
 
-train_data=datasets.MNIST('C:\\Users\\82104\\Downloads',train=True, download=True, transform=transforms.ToTensor())
-test_data=datasets.MNIST('C:\\Users\\82104\\Downloads',train=True, download=True, transform=transforms.ToTensor())
+train_data=datasets.MNIST(file_path,train=True, download=True, transform=transforms.ToTensor())
+test_data=datasets.MNIST(file_path,train=True, download=True, transform=transforms.ToTensor())
 
 train_loader=torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
 test_loader=torch.utils.data.DataLoader(test_data,batch_size=batch_size)
-
-
-# In[5]:
 
 
 def test(data_loader,model):
@@ -80,16 +62,10 @@ def test(data_loader,model):
     print(f"Accuracy:{accuracy}()")
 
 
-# In[6]:
-
-
 model=CNN()
 criterion=torch.nn.CrossEntropyLoss()
 optimizer=torch.optim.Adam(model.parameters(),lr=0.01)
 scheduler=torch.optim.lr_scheduler.LambdaLR(optimizer=optimizer,lr_lambda=lambda epoch:0.95** epoch, last_epoch=-1)
-
-
-# In[10]:
 
 
 training_epochs=5
@@ -113,14 +89,9 @@ for epoch in range(training_epochs):
     print('Dev')
     test(test_loader,model)
 
-
-# In[11]:
-
-
 torch.save(model.state_dict(), 'model.pt')
 
 
-# In[ ]:
 
 
 
